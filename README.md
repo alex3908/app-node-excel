@@ -1,7 +1,6 @@
 # Node App
 
-Importa y exporta archivos de excel
-
+Import and Export Excel Files
 ### Setup
 ```bash
 $ npm install  #install project dependencies
