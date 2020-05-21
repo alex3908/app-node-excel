@@ -1,0 +1,124 @@
+<%- include('partials/_header') %>
+    <div class="container">
+
+        <!-- Form -->
+        <div class="col-md-12 mt-5">
+            <p></p>
+            <div class="card">
+                <div class="card-body">
+                    <form action="/add" method="POST" class="needs-validation" novalidate>
+                        <div class="form-row">
+                            <div class="col-md-2 mb-3">
+                                <label for="validationCustom01">Part Number</label>
+                                <input type="text" class="form-control" onkeypress="return permite(event, 'num')" id="validationCustom01" name="partNumber" placeholder="" required>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="validationCustom02">Description</label>
+                                <input type="text" class="form-control" onkeypress="return permite(event, 'car')" id="validationCustom02" name="description1" placeholder="" required>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="validationCustom02">Quantity</label>
+                                <input type="text" class="form-control" onkeypress="return permite(event, 'num')" id="validationCustom03" name="quantity" placeholder="" required>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="validationCustom02">Unit</label>
+                                <input type="text" class="form-control" onkeypress="return permite(event, 'car')" id="validationCustom04" name="unit" placeholder="" required>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="validationCustom02">Unit Price</label>
+                                <input type="text" class="form-control" onkeypress="return permite(event, 'num_car')" id="validationCustom05" name="unitPrice" placeholder="" required>
+
+                            </div>
+                            <div class="col-md-2 mb-3" style="text-align: center;">
+                                <label style="color:#fff;">Add Operations</label>
+                                <button class="btn btn-primary" type="submit">Add</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- Upload -->
+        <div class="col-md-12 mt-3">
+            <p>Select an xlsx document to upload</p>
+            <form id="form" enctype="multipart/form-data" action="sendFile" method="post">
+                <div class="form-row">
+                    <div class="col-md-5 mb-b3">
+                        <input type="file" name="file" class="form-control" required/>
+                    </div>
+                    <input type="submit" value="Upload" name="submit" class="btn btn-primary">
+
+                </div>
+
+            </form>
+        </div>
+        <!-- List -->
+        <div class="container-fluid mt-3">
+
+
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Unit Price</th>
+                        <th>Subtotal</th>
+                        <th style="text-align: center;">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% if(data) {%>
+                        <%var datos = 0;%>
+                            <% for(var i = 0; i<data.length; i++) {%>
+                                <tr>
+                                    <td>
+                                        <%= data[i].partNumber %>
+                                    </td>
+                                    <td>
+                                        <%= data[i].description1%>
+                                    </td>
+                                    <td>
+                                        <%= data[i].quantity %>
+                                    </td>
+                                    <td>
+                                        <%= data[i].unit %>
+                                    </td>
+                                    <td>
+                                        <%= `${data[i].unitPrice}` %>
+                                    </td>
+                                    <td>
+                                        <%= `${data[i].quantity * data[i].unitPrice}` %>
+
+                                    </td>
+                                    <td style="text-align: center;">
+
+                                        <a href="/delete/<%= data[i].id %>" class="btn">
+                                            <i class="material-icons md-36" style="color: red;">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <% datos = datos + (data[i].quantity * data[i].unitPrice) %>
+                                    <%}%>
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4"></th>
+                        <th>Total</th>
+                        <th>
+                            <%= datos %>
+                        </th>
+                        <th></th>
+                    </tr>
+                    <%}%>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <%- include('partials/_footer') %>

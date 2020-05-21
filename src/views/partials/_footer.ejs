@@ -1,0 +1,74 @@
+<footer id="sticky-footer" class="py-3 bg-dark text-white-50 mt-5">
+    <div class="container text-center">
+        <small>&copy; My Node App</small>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    });
+
+    // validate inputs
+    function permite(elEvento, permitidos) {
+
+        var numeros = "0123456789";
+        var caracteres = " aábcdeéfghiíjklmnñoópqrstuvwxyzAÁBCDEÉFGHIÍJKLMNÑOÓPQRSTUVWXYZ";
+        var teclas_especiales = [8, 37, 39, 46];
+        var numeros_caracteres = numeros + caracteres;
+        // 8 = BackSpace, 46 = Supr, 37 = flecha izquierda, 39 = flecha derecha
+        // Seleccionar los caracteres a partir del parámetro de la función
+        switch (permitidos) {
+            case 'num':
+                permitidos = numeros;
+                break;
+            case 'car':
+                permitidos = caracteres;
+                break;
+            case 'num_car':
+                permitidos = numeros_caracteres;
+                break;
+        }
+        // Obtener la tecla pulsada 
+        var evento = elEvento || window.event;
+        var codigoCaracter = evento.charCode || evento.keyCode;
+        var caracter = String.fromCharCode(codigoCaracter);
+        // Comprobar si la tecla pulsada es alguna de las teclas especiales
+        // (teclas de borrado y flechas horizontales)
+        var tecla_especial = false;
+        for (var i in teclas_especiales) {
+            if (codigoCaracter == teclas_especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+        // Comprobar si la tecla pulsada se encuentra en los caracteres permitidos
+        // o si es una tecla especial
+        return permitidos.indexOf(caracter) != -1 || tecla_especial;
+    }
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+<script data-main="/js/app" src="/js/libs/requirejs/require.js"></script>
+</body>
+
+</html>
